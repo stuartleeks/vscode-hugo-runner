@@ -1,8 +1,8 @@
-# vscode-hugo-runner README
+# Hugo Runner (vscode-hugo-runner)
 
-This is the README for your extension "vscode-hugo-runner". After writing up a brief description, we recommend including the following sections.
+Hugo Runner is a Visual Studio Code extension that allows you to easily run [Hugo](https://gohugo.io) sites from within the editor.
 
-## Features
+<!-- ## Features
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
@@ -10,62 +10,49 @@ For example if there is an image subfolder under your extension project workspac
 
 \!\[feature X\]\(images/feature-x.png\)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow. -->
 
-## Requirements
+## Getting Started
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Install Hugo
+
+Hugo Runner needs the Hugo executable to be installed on your system.
+You can download the binary for your platform from the [Hugo releases page](https://github.com/gohugoio/hugo/releases/latest).
+
+Once downloaded, extract the binary and set the `hugoRunner.hugoPath` setting in your VS Code settings to the path of the binary.
+
+Alternatively (currently Windows users only) you can run the "Hugo Runner: Install Hugo" command to download and install Hugo for you.
+
+## Commands
+
+### Install Hugo
+
+Downloads and installs the Hugo binary for you. Currently only available on Windows (non-ARM processors).
+
+### Check Hugo Version
+
+Checks the version of the Hugo binary you have installed.
+This command is useful to verify that the Hugo binary is installed correctly and that the path is set correctly in the settings.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+| Setting                 | Description                                                                                                                                                       |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `hugoRunner.hugoExecutablePath`   | Path to the Hugo executable. On Windows, you can omit this and run "Hugo Runner: Install Hugo".                                                                   |
+| `hugoRunner.siteFolder` | By default, Hugo Runner will launch hugo for the VS Code workspace folder. To configure a sub-folder for your Hugo site, set this setting (in Workspace Settings) |
 
-For example:
 
-This extension contributes the following settings:
+<!-- ## Known Issues
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Calling out known issues can help limit users opening duplicate issues against your extension. -->
 
 ## Release Notes
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### v0.1.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+- Command: Install Hugo (Windows only currently)
+- Command: Check Version
+- Command: Run Hugo Server
+- Command: Stop Hugo Server

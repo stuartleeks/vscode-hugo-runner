@@ -1,8 +1,13 @@
 {
     "name": "vscode-hugo-runner",
     "displayName": "vscode-hugo-runner",
-    "description": "",
-    "version": "0.0.1",
+    "publisher": "stuartleeks",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/stuartleeks/vscode-hugo-runner"
+    },
+    "description": "VS Code extension for running hugo sites",
+    "version": "0.1.0",
     "engines": {
         "vscode": "^1.90.0"
     },
@@ -13,18 +18,51 @@
     "main": "./out/extension.js",
     "contributes": {
         "commands": [{
-                "command": "vscode-hugo-runner.helloWorld",
-                "title": "Hugo Runner: Hello World"
-            },
-            {
                 "command": "vscode-hugo-runner.hugoInstall",
                 "title": "Hugo Runner: Install Hugo"
             },
             {
                 "command": "vscode-hugo-runner.hugoVersion",
                 "title": "Hugo Runner: Check Hugo version"
+            },
+            {
+                "command": "vscode-hugo-runner.showOutput",
+                "title": "Hugo Runner: Show Output"
+            },
+            {
+                "command": "vscode-hugo-runner.runHugo",
+                "title": "Hugo Runner: Run"
+            },
+            {
+                "command": "vscode-hugo-runner.stopHugo",
+                "title": "Hugo Runner: Stop"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "Hugo Runner",
+            "properties": {
+                "hugo-runner.hugoExecutablePath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Path to Hugo executable"
+                },
+                "hugo-runner.siteFolder": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Path to Hugo Site to run"
+                },
+                "hugo-runner.showDrafts": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show drafts when running Hugo"
+                },
+                "hugo-runner.port": {
+                    "type": "number",
+                    "default": 1313,
+                    "description": "Port to run Hugo server"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
