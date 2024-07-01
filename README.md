@@ -36,11 +36,12 @@ This command is useful to verify that the Hugo binary is installed correctly and
 
 ## Extension Settings
 
-| Setting                 | Description                                                                                                                                                       |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `hugoRunner.hugoExecutablePath`   | Path to the Hugo executable. On Windows, you can omit this and run "Hugo Runner: Install Hugo".                                                                   |
-| `hugoRunner.siteFolder` | By default, Hugo Runner will launch hugo for the VS Code workspace folder. To configure a sub-folder for your Hugo site, set this setting (in Workspace Settings) |
-
+| Setting                         | Description                                                                                                                                                       |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `hugoRunner.hugoExecutablePath` | Path to the Hugo executable. On Windows, you can omit this and run "Hugo Runner: Install Hugo".                                                                   |
+| `hugoRunner.siteFolder`         | By default, Hugo Runner will launch hugo for the VS Code workspace folder. To configure a sub-folder for your Hugo site, set this setting (in Workspace Settings) |
+| `hugo-runner.showDrafts`        | Show drafts when running the Hugo server. Boolean, defaults to `false`                                                                                            |
+| `hugo-runner.port`              | Port to run the Hugo server on. Number, defaults to `1313`                                                                                                        |
 
 <!-- ## Known Issues
 
