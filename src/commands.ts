@@ -10,10 +10,22 @@ export class HugoRunnerExtension {
 	constructor(private context: vscode.ExtensionContext, private outputChannel: vscode.OutputChannel) {
 	}
 
+	private getHugoPlatformString(): string {
+		switch (process.platform) {
+			case "win32":
+				return "windows";
+			case "darwin":
+				return "darwin";
+			case "linux":
+				return "linux";
+			default:
+				throw new Error(`Unhandled platform: ${process.platform}`);
+		}
+	}
+
 	async installHugo() {
 		this.outputChannel.show(true);
 
-		// TODO - temp limit to Windows
 
 		const hugoRunnerConfig = vscode.workspace.getConfiguration('hugo-runner');
 		const configHugoPath = hugoRunnerConfig.get("hugoExecutablePath");
@@ -39,27 +51,36 @@ export class HugoRunnerExtension {
 		const lastSegment = segments[segments.length - 1];
 		const latestVersion = lastSegment.slice(1);
 
-		// TODO: handle non-windows and arm!
-		this.outputChannel.appendLine(`Downloading version ${latestVersion}...`);
+		// TODO: handle non-amd64 processor!
+		const platform = this.getHugoPlatformString();
+		const extension = platform === 'windows' ? 'zip' : 'tar.gz';
+		const downloadUrl = `https://github.com/gohugoio/hugo/releases/download/v${latestVersion}/hugo_extended_${latestVersion}_${platform}-amd64.${extension}`;
+		const filename = platform === 'windows' ? 'hugo' : 'hugo.tar.gz'; // folder name for windows, tar.gz for others
 
-		const downloadUrl = `https://github.com/gohugoio/hugo/releases/download/v${latestVersion}/hugo_extended_${latestVersion}_windows-amd64.zip`;
-
+		this.outputChannel.appendLine(`Downloading version ${latestVersion}... (from ${downloadUrl})`);
 
 		const fileDownloader: FileDownloader = await getApi();
 		const directory = await fileDownloader.downloadFile(
 			vscode.Uri.parse(downloadUrl),
-			"hugo",
+			filename,
 			this.context,
 			undefined,
 			undefined,
-			{ shouldUnzip: true }
+			{ shouldUnzip: platform === 'windows' }
 		);
 
+		// file downloader auto-unzips on windows
+		// on other platforms, extract from tar.gz
+		if (platform !== 'windows') {
+			const tarPath = path.join(directory.fsPath);
+			const outputPath = path.join(directory.fsPath, '../hugo');
+			childProcess.execSync(`rm -rf "${outputPath}" && mkdir -p "${outputPath}" && tar -xzf "${tarPath}" -C "${outputPath}"`);
+		}
+
 		this.outputChannel.appendLine('Checking that we can run hugo...');
-		const hugoPath = path.join(directory.fsPath, 'hugo.exe');
+		const hugoPath = await this.getHugoBinaryPath();
 		const buf = childProcess.execSync(`${hugoPath} version`);
 		const output = buf.toString();
-		console.log(output);
 
 		this.outputChannel.appendLine('Hugo installed!');
 
@@ -95,7 +116,9 @@ export class HugoRunnerExtension {
 			throw new Error("Hugo is not configured/installed. Please set hugo-runner.hugoExecutablePath or run 'Hugo Runner: Install Hugo'.");
 		}
 
-		return path.join(hugoItem.fsPath, 'hugo.exe');
+		const exeName = process.platform === 'win32' ? 'hugo.exe' : 'hugo';
+
+		return path.join(hugoItem.fsPath, exeName);
 	}
 
 	async runHugoCommand() {
@@ -109,7 +132,7 @@ export class HugoRunnerExtension {
 		const port = hugoConfig.get("port") as number;
 		return { drafts, port };
 	}
-	private async runHugo(options? : {drafts?: boolean, port?: number}): Promise<void> {
+	private async runHugo(options?: { drafts?: boolean, port?: number }): Promise<void> {
 
 		if (this.hugoProcess) {
 			this.outputChannel.appendLine("Hugo is already running!");
@@ -121,7 +144,7 @@ export class HugoRunnerExtension {
 		const outputChannel = this.outputChannel;
 
 		outputChannel.show(true);
-		
+
 		const sitePath = vscode.workspace.getConfiguration('hugo-runner').get("siteFolder") as string ?? "";
 
 		const workspaceFolderBase = vscode.workspace.workspaceFolders?.[0].uri.fsPath;

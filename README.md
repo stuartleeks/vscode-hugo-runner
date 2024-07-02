@@ -49,7 +49,9 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+## v0.1.1 2024-07-02
+
+- Changed: Added non-Windows support for Install Hugo command
 
 ### v0.1.0
 
