@@ -1,6 +1,6 @@
 {
     "name": "vscode-hugo-runner",
-    "displayName": "vscode-hugo-runner",
+    "displayName": "Hugo Runner",
     "publisher": "stuartleeks",
     "repository": {
         "type": "git",
@@ -64,13 +64,11 @@
             }
         },
         "views": {
-            "explorer": [
-                {
-                    "type": "webview",
-                    "id": "vscode-hugo-runner.hugoRunner",
-                    "name": "Hugo Runner"
-                }
-            ]
+            "explorer": [{
+                "type": "webview",
+                "id": "vscode-hugo-runner.hugoRunner",
+                "name": "Hugo Runner"
+            }]
         }
     },
     "scripts": {
