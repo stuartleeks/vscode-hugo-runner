@@ -62,6 +62,15 @@
                     "description": "Port to run Hugo server"
                 }
             }
+        },
+        "views": {
+            "explorer": [
+                {
+                    "type": "webview",
+                    "id": "vscode-hugo-runner.hugoRunner",
+                    "name": "Hugo Runner"
+                }
+            ]
         }
     },
     "scripts": {

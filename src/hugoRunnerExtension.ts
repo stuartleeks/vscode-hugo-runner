@@ -4,10 +4,14 @@ import { get } from "http";
 import * as path from "path";
 import * as vscode from "vscode";
 
-export class HugoRunnerExtension {
+export class HugoRunnerExtension extends EventTarget {
 	private hugoProcess: childProcess.ChildProcessWithoutNullStreams | undefined;
 
+	private _hugoStarted: Event = new Event('hugoStarted');
+	private _hugoStopped: Event = new Event('hugoStopped');
+
 	constructor(private context: vscode.ExtensionContext, private outputChannel: vscode.OutputChannel) {
+		super();
 	}
 
 	private getHugoPlatformString(): string {
@@ -167,6 +171,8 @@ export class HugoRunnerExtension {
 		const proc = childProcess.spawn(hugoExePath, args, { cwd: fullSitePath });
 		this.hugoProcess = proc;
 
+		this.dispatchEvent(this._hugoStarted);
+
 		proc.on('error', (err) => {
 			outputChannel.appendLine(`Error: ${err}`);
 		});
@@ -180,6 +186,7 @@ export class HugoRunnerExtension {
 		proc.on('exit', () => {
 			outputChannel.appendLine(`Hugo exited: ${proc.exitCode}`);
 			self.hugoProcess = undefined;
+			this.dispatchEvent(this._hugoStopped);
 		});
 	}
 
