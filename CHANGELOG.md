@@ -2,7 +2,11 @@
 
 All notable changes to the "vscode-hugo-runner" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+<!-- Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file. -->
+
+## v0.1.2 2024-07-02
+
+- Fix: Version bump to fix docs
 
 ## v0.1.1 2024-07-02
 

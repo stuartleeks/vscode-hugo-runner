@@ -21,13 +21,14 @@ You can download the binary for your platform from the [Hugo releases page](http
 
 Once downloaded, extract the binary and set the `hugoRunner.hugoPath` setting in your VS Code settings to the path of the binary.
 
-Alternatively (currently Windows users only) you can run the "Hugo Runner: Install Hugo" command to download and install Hugo for you.
+Alternatively, you can run the "Hugo Runner: Install Hugo" command to download and install Hugo for you.
 
 ## Commands
 
 ### Install Hugo
 
-Downloads and installs the Hugo binary for you. Currently only available on Windows (non-ARM processors).
+Downloads and installs the Hugo binary for you.
+The latest version is downloaded and stored privately for the runner to use.
 
 ### Check Hugo Version
 
@@ -38,7 +39,7 @@ This command is useful to verify that the Hugo binary is installed correctly and
 
 | Setting                         | Description                                                                                                                                                       |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `hugoRunner.hugoExecutablePath` | Path to the Hugo executable. On Windows, you can omit this and run "Hugo Runner: Install Hugo".                                                                   |
+| `hugoRunner.hugoExecutablePath` | Path to the Hugo executable. Alternatively, you can omit this and run "Hugo Runner: Install Hugo" to.                                                                   |
 | `hugoRunner.siteFolder`         | By default, Hugo Runner will launch hugo for the VS Code workspace folder. To configure a sub-folder for your Hugo site, set this setting (in Workspace Settings) |
 | `hugo-runner.showDrafts`        | Show drafts when running the Hugo server. Boolean, defaults to `false`                                                                                            |
 | `hugo-runner.port`              | Port to run the Hugo server on. Number, defaults to `1313`                                                                                                        |
@@ -49,11 +50,15 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 ## Release Notes
 
+## v0.1.2 2024-07-02
+
+- Fix: Version bump to fix docs
+
 ## v0.1.1 2024-07-02
 
 - Changed: Added non-Windows support for Install Hugo command
 
-### v0.1.0
+### v0.1.0 2024-07-01
 
 - Command: Install Hugo (Windows only currently)
 - Command: Check Version

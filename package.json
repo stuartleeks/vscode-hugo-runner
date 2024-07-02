@@ -7,7 +7,7 @@
         "url": "https://github.com/stuartleeks/vscode-hugo-runner"
     },
     "description": "VS Code extension for running hugo sites",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "engines": {
         "vscode": "^1.90.0"
     },
