@@ -35,6 +35,11 @@ export class HugoRunnerViewProvider implements vscode.WebviewViewProvider {
 						this.runner.stopHugo();
 						break;
 					}
+				case 'showOutput':
+					{
+						this.runner.showOutput();
+						break;
+					}
 			}
 		});
 	}
@@ -104,6 +109,7 @@ export class HugoRunnerViewProvider implements vscode.WebviewViewProvider {
 						<label for="include-future">Include Future</label>
 					</div>
 				</div>
+				<button class="show-output-button">Show Output</button>
 
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>

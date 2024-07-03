@@ -4,20 +4,23 @@
     const vscode = acquireVsCodeApi();
 
     const startButton = document.querySelector('.start-button');
-    startButton?.addEventListener('click', () => {
-        startHugo();
-    });
-    const stopButton = document.querySelector('.stop-button');
-    stopButton?.addEventListener('click', () => {
-        stopHugo();
-    });
-    const includeDraftsCheckbox = document.getElementById('include-drafts');
-    const includeFutureCheckbox = document.getElementById('include-future');
-    const includeExpiredCheckbox = document.getElementById('include-expired');
+    startButton?.addEventListener('click', () => { startHugo(); });
 
-    includeDraftsCheckbox?.addEventListener('change', () => {saveState();});
-    includeFutureCheckbox?.addEventListener('change', () => {saveState();});
-    includeExpiredCheckbox?.addEventListener('change', () => {saveState();});
+    const stopButton = document.querySelector('.stop-button');
+    stopButton?.addEventListener('click', () => { stopHugo(); });
+    
+    const showOutputButton = document.querySelector('.show-output-button');
+    showOutputButton?.addEventListener('click', () => { showOutput(); });
+
+    const includeDraftsCheckbox = document.getElementById('include-drafts');
+    includeDraftsCheckbox?.addEventListener('change', () => { saveState(); });
+    
+    const includeFutureCheckbox = document.getElementById('include-future');
+    includeFutureCheckbox?.addEventListener('change', () => { saveState(); });
+    
+    const includeExpiredCheckbox = document.getElementById('include-expired');
+    includeExpiredCheckbox?.addEventListener('change', () => { saveState(); });
+
 
     const previousState = vscode.getState();
     if (previousState) {
@@ -59,6 +62,9 @@
     }
     function stopHugo() {
         vscode.postMessage({ type: 'stopHugo' });
+    }
+    function showOutput() {
+        vscode.postMessage({ type: 'showOutput' });
     }
 
     function saveState(){
