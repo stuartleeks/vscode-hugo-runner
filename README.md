@@ -51,6 +51,10 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 ## vNext
 
+- TODO
+
+## v0.2.0 2024-07-03
+
 - Added: WebView options to build drafts, future, and expired content
 - Removed: `hugoRunner.showDrafts` setting in favour of the WebView option
 

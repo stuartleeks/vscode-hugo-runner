@@ -6,6 +6,10 @@ All notable changes to the "vscode-hugo-runner" extension will be documented in 
 
 ## vNext
 
+- TODO
+
+## v0.2.0 2024-07-03
+
 - Added: WebView options to build drafts, future, and expired content
 - Removed: `hugoRunner.showDrafts` setting in favour of the WebView option
 
