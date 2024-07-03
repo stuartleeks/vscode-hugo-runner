@@ -2,15 +2,15 @@
 
 Hugo Runner is a Visual Studio Code extension that allows you to easily run [Hugo](https://gohugo.io) sites from within the editor.
 
-<!-- ## Features
+## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Hugo Runner adds a new panel (and a few commands to the command palette) to help you run your Hugo site:
 
-For example if there is an image subfolder under your extension project workspace:
+![alt text](images/webview.png)
 
-\!\[feature X\]\(images/feature-x.png\)
+Output from Hugo is shown in an output panel, including the server URL for ease of launching the site in your browser (Ctrl+Click to open).
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow. -->
+![alt text](images/output.png)
 
 ## Getting Started
 
