@@ -127,9 +127,8 @@ export class HugoRunnerExtension extends EventTarget {
 
 	getDefaultHugoOptions() {
 		const hugoConfig = vscode.workspace.getConfiguration('hugo-runner');
-		const drafts = hugoConfig.get("showDrafts") as boolean;
 		const port = hugoConfig.get("port") as number;
-		return { drafts, port };
+		return { port };
 	}
 	async startHugo(options?: { port?: number, drafts?: boolean, future?: boolean, expired?: boolean }): Promise<void> {
 
