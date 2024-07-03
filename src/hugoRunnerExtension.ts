@@ -125,28 +125,27 @@ export class HugoRunnerExtension extends EventTarget {
 		return path.join(hugoItem.fsPath, exeName);
 	}
 
-	async runHugoCommand() {
-		const options = this.getDefaultHugoOptions();
-		await this.runHugo(options);
-	}
-
-	private getDefaultHugoOptions() {
+	getDefaultHugoOptions() {
 		const hugoConfig = vscode.workspace.getConfiguration('hugo-runner');
 		const drafts = hugoConfig.get("showDrafts") as boolean;
 		const port = hugoConfig.get("port") as number;
 		return { drafts, port };
 	}
-	private async runHugo(options?: { drafts?: boolean, port?: number }): Promise<void> {
+	async startHugo(options?: { port?: number, drafts?: boolean, future?: boolean, expired?: boolean }): Promise<void> {
+
+		const optionsWithDefaults = { ...this.getDefaultHugoOptions(), ...options };
+		const outputChannel = this.outputChannel;
 
 		if (this.hugoProcess) {
-			this.outputChannel.appendLine("Hugo is already running!");
+			outputChannel.appendLine("Hugo is already running!");
 			vscode.window.showErrorMessage("Hugo is already running!");
 			return;
 		}
 
+		
 		const hugoExePath = await this.getHugoBinaryPath();
-		const outputChannel = this.outputChannel;
-
+		
+		outputChannel.clear();
 		outputChannel.show(true);
 
 		const sitePath = vscode.workspace.getConfiguration('hugo-runner').get("siteFolder") as string ?? "";
@@ -160,14 +159,25 @@ export class HugoRunnerExtension extends EventTarget {
 		const fullSitePath = path.join(workspaceFolderBase, sitePath);
 		console.log({ sitePath, fullSitePath });
 
-		outputChannel.appendLine(`\nRunning Hugo in ${fullSitePath}\n`);
+		outputChannel.appendLine(`\nRunning Hugo in ${fullSitePath}`);
 		const args = ["serve"];
 		if (options?.drafts) {
+			outputChannel.appendLine("Building drafts");
 			args.push("--buildDrafts");
 		}
+		if (options?.future) {
+			outputChannel.appendLine("Building future posts");
+			args.push("--buildFuture");
+		}
+		if (options?.expired) {
+			outputChannel.appendLine("Building expired posts");
+			args.push("--buildExpired");
+		}
 		if (options?.port) {
+			outputChannel.appendLine(`Using port ${options.port}`);
 			args.push("--port", options.port.toString());
 		}
+		outputChannel.appendLine("\n");
 		const proc = childProcess.spawn(hugoExePath, args, { cwd: fullSitePath });
 		this.hugoProcess = proc;
 

@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('vscode-hugo-runner.hugoInstall', () => hugoRunner.installHugo()));
 	context.subscriptions.push(vscode.commands.registerCommand('vscode-hugo-runner.hugoVersion', () => hugoRunner.showHugoVersion()));
 	context.subscriptions.push(vscode.commands.registerCommand('vscode-hugo-runner.showOutput', () => hugoRunner.showOutput()));
-	context.subscriptions.push(vscode.commands.registerCommand('vscode-hugo-runner.runHugo', () => hugoRunner.runHugoCommand()));
+	context.subscriptions.push(vscode.commands.registerCommand('vscode-hugo-runner.runHugo', () => hugoRunner.startHugo()));
 	context.subscriptions.push(vscode.commands.registerCommand('vscode-hugo-runner.stopHugo', () => hugoRunner.stopHugo()));
 
 }

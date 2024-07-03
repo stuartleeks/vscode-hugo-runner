@@ -24,7 +24,10 @@ export class HugoRunnerViewProvider implements vscode.WebviewViewProvider {
 			switch (data.type) {
 				case 'startHugo':
 					{
-						this.runner.runHugoCommand();
+						const drafts = !!data.drafts;
+						const future = !!data.future;
+						const expired = !!data.expired;
+						this.runner.startHugo({ drafts, future, expired });
 						break;
 					}
 				case 'stopHugo':
@@ -85,6 +88,21 @@ export class HugoRunnerViewProvider implements vscode.WebviewViewProvider {
 				<div class="start-stop">
 					<button class="start-button">Start Hugo</button>
 					<button class="stop-button" disabled>Stop Hugo</button>
+				</div>
+				<div class="options">
+					<h2>Options</h2>
+					<div>
+						<input type="checkbox" id="include-drafts" name="include-drafts">
+						<label for="drafts">Include Drafts</label>
+					</div>
+					<div>
+						<input type="checkbox" id="include-expired" name="include-expired">
+						<label for="include-expired">Include Expired</label>
+					</div>
+					<div>
+						<input type="checkbox" id="include-future" name="include-future">
+						<label for="include-future">Include Future</label>
+					</div>
 				</div>
 
 				<script nonce="${nonce}" src="${scriptUri}"></script>

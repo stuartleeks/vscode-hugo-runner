@@ -50,6 +50,10 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 ## Release Notes
 
+## vNext
+
+- Added: WebView options to build drafts, future, and expired content
+
 ## v0.1.2 2024-07-02
 
 - Fix: Version bump to fix docs

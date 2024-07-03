@@ -4,6 +4,10 @@ All notable changes to the "vscode-hugo-runner" extension will be documented in 
 
 <!-- Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file. -->
 
+## vNext
+
+- Added: WebView options to build drafts, future, and expired content
+
 ## v0.1.2 2024-07-02
 
 - Fix: Version bump to fix docs
