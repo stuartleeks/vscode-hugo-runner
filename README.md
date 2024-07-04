@@ -53,6 +53,10 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 - TODO
 
+## v0.3.0 2024-07-04
+
+- Added: Start Hugo will now prompt to install if Hugo is not found
+
 ## v0.2.0 2024-07-03
 
 - Added: WebView options to build drafts, future, and expired content

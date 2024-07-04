@@ -8,6 +8,10 @@ All notable changes to the "vscode-hugo-runner" extension will be documented in 
 
 - TODO
 
+## v0.3.0 2024-07-04
+
+- Added: Start Hugo will now prompt to install if Hugo is not found
+
 ## v0.2.0 2024-07-03
 
 - Added: WebView options to build drafts, future, and expired content

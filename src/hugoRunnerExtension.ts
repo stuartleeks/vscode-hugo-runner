@@ -106,7 +106,7 @@ export class HugoRunnerExtension extends EventTarget {
 		this.outputChannel.show();
 	}
 
-	private async getHugoBinaryPath(): Promise<string> {
+	private async getHugoBinaryPath(options ?: {allowInstallation?: boolean}): Promise<string> {
 		// Check if the user has set a custom path
 		const hugoPath = vscode.workspace.getConfiguration('hugo-runner').get("hugoExecutablePath") as string;
 		if (hugoPath && hugoPath.length > 0) {
@@ -117,7 +117,19 @@ export class HugoRunnerExtension extends EventTarget {
 		const fileDownloader: FileDownloader = await getApi();
 		const hugoItem = await fileDownloader.tryGetItem("hugo", this.context);
 		if (hugoItem === undefined) {
-			throw new Error("Hugo is not configured/installed. Please set hugo-runner.hugoExecutablePath or run 'Hugo Runner: Install Hugo'.");
+			if (options?.allowInstallation) {
+				const result = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `Couldn't find Hugo - do you want to install it?` });
+				if (result === 'Yes') {
+					await this.installHugo();
+					return this.getHugoBinaryPath();
+				}
+				else {
+					throw new Error("Hugo is not configured/installed (2). Please set hugo-runner.hugoExecutablePath or run 'Hugo Runner: Install Hugo'.");
+				}
+			}
+			else {
+				throw new Error("Hugo is not configured/installed. Please set hugo-runner.hugoExecutablePath or run 'Hugo Runner: Install Hugo'.");
+			}
 		}
 
 		const exeName = process.platform === 'win32' ? 'hugo.exe' : 'hugo';
@@ -141,11 +153,16 @@ export class HugoRunnerExtension extends EventTarget {
 			return;
 		}
 
-		
-		const hugoExePath = await this.getHugoBinaryPath();
-		
 		outputChannel.clear();
 		outputChannel.show(true);
+
+		let hugoExePath: string;
+		try {
+			hugoExePath = await this.getHugoBinaryPath({allowInstallation: true});
+		} catch (error) {
+			outputChannel.appendLine(`Error: ${error}`);
+			return;
+		}
 
 		const sitePath = vscode.workspace.getConfiguration('hugo-runner').get("siteFolder") as string ?? "";
 
@@ -160,21 +177,21 @@ export class HugoRunnerExtension extends EventTarget {
 
 		outputChannel.appendLine(`\nRunning Hugo in ${fullSitePath}`);
 		const args = ["serve"];
-		if (options?.drafts) {
+		if (optionsWithDefaults?.drafts) {
 			outputChannel.appendLine("Building drafts");
 			args.push("--buildDrafts");
 		}
-		if (options?.future) {
+		if (optionsWithDefaults?.future) {
 			outputChannel.appendLine("Building future posts");
 			args.push("--buildFuture");
 		}
-		if (options?.expired) {
+		if (optionsWithDefaults?.expired) {
 			outputChannel.appendLine("Building expired posts");
 			args.push("--buildExpired");
 		}
-		if (options?.port) {
-			outputChannel.appendLine(`Using port ${options.port}`);
-			args.push("--port", options.port.toString());
+		if (optionsWithDefaults?.port) {
+			outputChannel.appendLine(`Using port ${optionsWithDefaults.port}`);
+			args.push("--port", optionsWithDefaults.port.toString());
 		}
 		outputChannel.appendLine("\n");
 		const proc = childProcess.spawn(hugoExePath, args, { cwd: fullSitePath });
@@ -184,12 +201,15 @@ export class HugoRunnerExtension extends EventTarget {
 
 		proc.on('error', (err) => {
 			outputChannel.appendLine(`Error: ${err}`);
+			self.hugoProcess = undefined;
+			this.dispatchEvent(this._hugoStopped);
 		});
 		proc.stderr.on('data', (data) => {
-			outputChannel.appendLine(`stderr: ${data}`);
+			// TODO - is there a way to add colour to the output?
+			outputChannel.appendLine(`${data}`);
 		});
 		proc.stdout.on('data', (data) => {
-			outputChannel.appendLine(`stdout: ${data}`);
+			outputChannel.appendLine(`${data}`);
 		});
 		const self = this;
 		proc.on('exit', () => {
