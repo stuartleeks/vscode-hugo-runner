@@ -8,6 +8,10 @@ All notable changes to the "vscode-hugo-runner" extension will be documented in 
 
 - TODO
 
+## v0.3.1 2024-07-09
+
+- Fixed: Runner Stop button disabled even when Hugo is running
+
 ## v0.3.0 2024-07-04
 
 - Added: Start Hugo will now prompt to install if Hugo is not found

@@ -54,6 +54,7 @@
         }
     });
 
+
     function startHugo() {
         const drafts = includeDraftsCheckbox?.checked;
         const future = includeFutureCheckbox?.checked;
@@ -73,5 +74,9 @@
         const expired = includeExpiredCheckbox?.checked;
         vscode.setState({drafts, future, expired});
     }
+
+
+    vscode.postMessage({ type: 'webviewReady' });
+
 }());
 

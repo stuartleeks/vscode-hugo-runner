@@ -22,6 +22,13 @@ export class HugoRunnerViewProvider implements vscode.WebviewViewProvider {
 
 		webviewView.webview.onDidReceiveMessage(data => {
 			switch (data.type) {
+				case 'webviewReady':
+					{
+						if (this.runner.isHugoRunning) {
+							this.sendHugoRunning();
+						}
+						break;
+					}
 				case 'startHugo':
 					{
 						const drafts = !!data.drafts;
@@ -42,6 +49,8 @@ export class HugoRunnerViewProvider implements vscode.WebviewViewProvider {
 					}
 			}
 		});
+
+		webviewView.webview.postMessage({ type: 'hugoStarted' });
 	}
 
 	private sendHugoRunning() {

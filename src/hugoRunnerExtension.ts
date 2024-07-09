@@ -30,7 +30,6 @@ export class HugoRunnerExtension extends EventTarget {
 	async installHugo() {
 		this.outputChannel.show(true);
 
-
 		const hugoRunnerConfig = vscode.workspace.getConfiguration('hugo-runner');
 		const configHugoPath = hugoRunnerConfig.get("hugoExecutablePath");
 
@@ -142,12 +141,15 @@ export class HugoRunnerExtension extends EventTarget {
 		const port = hugoConfig.get("port") as number;
 		return { port };
 	}
+	get isHugoRunning() {
+		return this.hugoProcess !== undefined;
+	}
 	async startHugo(options?: { port?: number, drafts?: boolean, future?: boolean, expired?: boolean }): Promise<void> {
 
 		const optionsWithDefaults = { ...this.getDefaultHugoOptions(), ...options };
 		const outputChannel = this.outputChannel;
 
-		if (this.hugoProcess) {
+		if (this.isHugoRunning) {
 			outputChannel.appendLine("Hugo is already running!");
 			vscode.window.showErrorMessage("Hugo is already running!");
 			return;

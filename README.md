@@ -49,9 +49,9 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 ## Release Notes
 
-## vNext
+## v0.3.1 2024-07-09
 
-- TODO
+- Fixed: Runner Stop button disabled even when Hugo is running
 
 ## v0.3.0 2024-07-04
 
