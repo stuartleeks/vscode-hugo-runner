@@ -8,6 +8,10 @@ All notable changes to the "vscode-hugo-runner" extension will be documented in 
 
 - TODO
 
+## v0.3.2 2024-07-09
+
+- Added: Show Hugo Runner version in output panel
+
 ## v0.3.1 2024-07-09
 
 - Fixed: Runner Stop button disabled even when Hugo is running

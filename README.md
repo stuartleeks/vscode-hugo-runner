@@ -49,6 +49,10 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 ## Release Notes
 
+## v0.3.2 2024-07-09
+
+- Added: Show Hugo Runner version in output panel
+
 ## v0.3.1 2024-07-09
 
 - Fixed: Runner Stop button disabled even when Hugo is running

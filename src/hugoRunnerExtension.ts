@@ -10,8 +10,12 @@ export class HugoRunnerExtension extends EventTarget {
 	private _hugoStarted: Event = new Event('hugoStarted');
 	private _hugoStopped: Event = new Event('hugoStopped');
 
+	private _version: string;
+
 	constructor(private context: vscode.ExtensionContext, private outputChannel: vscode.OutputChannel) {
 		super();
+
+		this._version = context.extension.packageJSON.version;
 	}
 
 	private getHugoPlatformString(): string {
@@ -157,6 +161,7 @@ export class HugoRunnerExtension extends EventTarget {
 
 		outputChannel.clear();
 		outputChannel.show(true);
+		outputChannel.appendLine(`Hugo Runner v${this._version}`);
 
 		let hugoExePath: string;
 		try {
