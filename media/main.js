@@ -21,6 +21,8 @@
     const includeExpiredCheckbox = document.getElementById('include-expired');
     includeExpiredCheckbox?.addEventListener('change', () => { saveState(); });
 
+    console.log("stopButton", stopButton?.attributes);
+
 
     const previousState = vscode.getState();
     if (previousState) {

@@ -8,6 +8,10 @@ All notable changes to the "vscode-hugo-runner" extension will be documented in 
 
 - TODO
 
+## v0.3.3 2024-07-025
+
+- Fix: Force state update on webview load to address button state issue
+
 ## v0.3.2 2024-07-09
 
 - Added: Show Hugo Runner version in output panel

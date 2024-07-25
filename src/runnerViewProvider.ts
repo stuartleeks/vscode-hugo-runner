@@ -26,6 +26,8 @@ export class HugoRunnerViewProvider implements vscode.WebviewViewProvider {
 					{
 						if (this.runner.isHugoRunning) {
 							this.sendHugoRunning();
+						} else {
+							this.sendHugoStopped();
 						}
 						break;
 					}

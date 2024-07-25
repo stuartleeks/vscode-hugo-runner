@@ -8,7 +8,7 @@
     },
     "description": "VS Code extension for running hugo sites",
     "icon": "images/hugo-runner.png",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "engines": {
         "vscode": "^1.90.0"
     },
